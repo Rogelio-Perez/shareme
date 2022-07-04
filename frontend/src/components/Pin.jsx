@@ -13,9 +13,9 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const navigate = useNavigate()
   const user = fetchUser()
 
-  const alreadySaved = !!(save?.filter(
+  const alreadySaved = !!save?.filter(
     (item) => item.postedBy._id === user.googleId
-  ))?.length
+  )?.length
 
   const savePin = (id) => {
     if (!alreadySaved) {
@@ -40,13 +40,11 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   }
 
   const deletePin = (id) => {
-    client
-      .delete(id)
-      .then(() => {
-        window.location.reload()
-      })
+    client.delete(id).then(() => {
+      window.location.reload()
+    })
   }
-  
+
   return (
     <div className='m-2'>
       <div
@@ -97,34 +95,44 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
               )}
             </div>
             <div className='flex justify-between items-center gap-2 w-full'>
-                  {destination && (
-                    <a href={destination}
-                      target='_blank'
-                      rel='noreferrer'
-                      className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:shadow-md'
-                    >
-                      <BsFillArrowUpRightCircleFill />
-                      {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)}
-                    </a>
-                  )}
-                  {postedBy?._id === user.googleId && (
-                    <button 
-                      type='button'
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        deletePin(_id)
-                      }}
-                      className='bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none'
-                    >
-                      <AiTwotoneDelete />
-                    </button>
-                  )}
+              {destination && (
+                <a
+                  href={destination}
+                  target='_blank'
+                  rel='noreferrer'
+                  className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:shadow-md'
+                >
+                  <BsFillArrowUpRightCircleFill />
+                  {destination.length > 20
+                    ? destination.slice(12, 20)
+                    : destination.slice(8)}
+                </a>
+              )}
+              {postedBy?._id === user.googleId && (
+                <button
+                  type='button'
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deletePin(_id)
+                  }}
+                  className='bg-white p-2 rounded-full w-8 h-8 flex items-center justify-center text-dark opacity-75 hover:opacity-100 outline-none'
+                >
+                  <AiTwotoneDelete />
+                </button>
+              )}
             </div>
           </div>
         )}
       </div>
-      <Link to={`user-profile/${postedBy?._id}`} className='flex gap-2 mt-2 items-center'>
-        <img src={postedBy?.image} alt="user-profile" className='w-8 h-8 rounded-full object-cover' />
+      <Link
+        to={`user-profile/${postedBy?._id}`}
+        className='flex gap-2 mt-2 items-center'
+      >
+        <img
+          src={postedBy?.image}
+          alt='user-profile'
+          className='w-8 h-8 rounded-full object-cover'
+        />
         <p className='font-semibold capitalize'>{postedBy?.userName} </p>
       </Link>
     </div>
