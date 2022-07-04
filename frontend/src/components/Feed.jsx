@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { client } from '../client'
 import { feedQuery, searchQuery } from '../utils/data'
-import MasonryLayout from './MsonryLayout'
+import MasonryLayout from './MasonryLayout'
 import Spinner from './Spinner'
 
 const Feed = () => {
