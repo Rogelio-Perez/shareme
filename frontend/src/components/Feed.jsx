@@ -14,13 +14,15 @@ const Feed = () => {
   useEffect(() => {
     if(categoryId) {
       const query = searchQuery(categoryId)
-
+      setLoading(true)
       client.fetch(query)
         .then((data) => {
           setPins(data)
           setLoading(false)
         })
     } else {
+      setLoading(true)
+      
       client.fetch(feedQuery)
         .then(data => {
           setPins(data)
@@ -30,7 +32,7 @@ const Feed = () => {
   }, [categoryId])
 
   if (loading)
-    return <Spinner message='We are adding new ideas to your feed!' />
+    return <Spinner message='✨ We are adding new ideas to your feed!' />
 
   if(!pins?.length) return <h2 className='text-3xl font-semibold'>No pins available ☹️</h2>
 

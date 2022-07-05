@@ -4,9 +4,10 @@ import { gapi } from 'gapi-script'
 
 import Login from './components/Login'
 import Home from './container/Home'
+import { fetchUser } from './utils/fetchUser'
 
 const App = () => {
-
+  const navigate = useNavigate()
 
   useEffect(() => {
     gapi.load('client:auth2', () => {
@@ -17,6 +18,12 @@ const App = () => {
     }
     )
   })
+  
+  useEffect(() => {
+    const user = fetchUser()
+
+    if(!user) navigate('/login')
+  }, [])
   
   return (
     <Routes>
